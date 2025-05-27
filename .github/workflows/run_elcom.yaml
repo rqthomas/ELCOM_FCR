@@ -16,8 +16,12 @@ jobs:
 
       - name: install deps
         run: |
-           apt-get update
-           apt-get install libnetcdf-dev libomp-dev
+           sudo apt-get update -y
+           sudo apt-get install libnetcdf-dev 
+           sudo apt-get install libnetcdf-dev 
+           libomp-dev
 
       - name: Run ELCOM
-        run: binary/elcd_20250526  
+        run: |
+          chmod u+x binary/elcd_20250526
+          binary/elcd_20250526  
