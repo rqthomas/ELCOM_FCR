@@ -1,0 +1,154 @@
+! --------------------------------------------------------------- !
+!  ELCOM Configuration file                                       !                                         !
+! --------------------------------------------------------------- !
+! --------------------------------------------------------------- !
+  'FCR'                                						 TITLE
+  'Thomas'                                                 ANALYST
+  'Virginia Tech - CEF'                         	  ORGANIZATION
+  'Prepared 05/27/2025'                                    COMMENT
+  'NONE'                                              CASE_KEYWORD
+! --------------------------------------------------------------- !
+! Time controls                                                   !
+  2018188.0											 start_date_cwr
+  20.0                                                       del_t
+  691200                                                   iter_max
+! --------------------------------------------------------------- !
+!  Simulation module controls                                     !
+  1                                                    iheat_input
+  0                                                  iatmstability
+  0                                                           iice
+  0                                                          irain
+  1                                                          iflow
+  0                                                     iunderflow
+  0                                                       ibubbler
+  1                                                   itemperature
+  0                                                      isalinity
+  1                                                       idensity
+  0                                                           ijet
+  0                                                        icaedym
+ ! 0                                                 iwaterquality
+  0                                                inonhydrostatic
+  0                                                      icoriolis
+  0                                                      ilaketide
+  0                                                  allow_neumann
+  0                                                     iretention
+  1                                                        ntracer
+  0                                                      ndrifters
+  4                                                       nthreads
+  3                                                     idatablock
+! --------------------------------------------------------------- !
+!  Model settings and controls                                    !
+  0.08                                                 mean_albedo
+  0.0                                                    time_zone
+  0.0013                                                   wind_cd
+  0.005                                                drag_btm_cd
+  1.0                                            model_grav_damp_x
+  1.0                                            model_grav_damp_y
+  2                                              ic_dist_weighting  
+! --------------------------------------------------------------- !
+!   Default (uniformly distributed) values                        !
+  0                                            DEFAULT_HEIGHT
+  0.0                                          DEFAULT_WIND_SPEED
+  0.0                                             DEFAULT_WIND_DIR
+  0.87                                       DEFAULT_PAR_EXTINCTION
+  1.0                                       DEFAULT_NIR_EXTINCTION
+  1.0                                       DEFAULT_UVA_EXTINCTION
+  2.5                                       DEFAULT_UVB_EXTINCTION
+  2.5                                     DEFAULT_RFLCT_EXTINCTION
+  35.0                                            DEFAULT_WTR_TEMP
+  0.0                                             DEFAULT_SALINITY
+  2                                                     DEFAULT_BC
+  0.04                                            DEFAULT_POCL_SED
+  0.5                                                DEFAULT_ZOOP1
+  0.1                                                DEFAULT_FDIAT
+  0.0                                          DEFAULT_DIFFUSIVITY
+  0.0                                            DEFAULT_NODUL_SED
+  0.1                                            DEFAULT_SSOL1_SED
+  0.5                                                DEFAULT_NODUL
+  9.0                                                   DEFAULT_DO
+  0.0                                                 DEFAULT_POCL
+  0.1                                                  DEFAULT_NO3
+  0.1                                            DEFAULT_SSOL2_SED
+  0.0                                                 DEFAULT_DOCL
+  0.01                                                 DEFAULT_PO4
+  0.0                                            DEFAULT_FDIAT_SED
+  0.5                                                DEFAULT_CYANO
+  0.0                                                 DEFAULT_PONL 
+  0.5                                                 DEFAULT_SiO2
+  0.0                                                 DEFAULT_POPL
+  0.0                                               DEFAULT_FILTER
+  0.0                                                 DEFAULT_DOPL
+  0.0                                                 DEFAULT_DONL
+  1.0                                                DEFAULT_SSOL1
+  0.08                                            DEFAULT_CYANO_IN
+  2.0                                                DEFAULT_SSOL2
+  0.05                                            DEFAULT_CYANO_IP
+  0.0                                            DEFAULT_CYANO_SED
+  0.1                                                  DEFAULT_NH4
+  0.1                                                  DEFAULT_PIN
+  0.1                                              DEFAULT_PIN_SED
+! --------------------------------------------------------------- !
+!  Scalar filtering controls                                      !
+  0                                                        IFILTER
+! --------------------------------------------------------------- !
+!  Initalization and update options                               !
+  0                                                       irestart
+  0                                                user_init_u_vel
+  0                                                user_init_v_vel
+  0                                                user_init_w_vel
+  0                                          user_init_temperature
+  0                                             user_init_salinity
+  0                                               user_init_tracer
+  0                                               user_init_height
+  0                                           user_init_extinction
+! --------------------------------------------------------------- !
+!  Meterological sensor heights                                   !
+  2.0                                            WIND_SPEED_HEIGHT
+  2.0                                                SCALAR_HEIGHT
+  0.9                                        SEDIMENT_REFLECTIVITY
+  0.0019                                    SURF_HEAT_TRANSF_COEFF
+! --------------------------------------------------------------- !
+!  Turbulence modelling controls                                  !
+  6                                                       iclosure
+! --------------------------------------------------------------- !
+!  Iterative (conjugate gradient method) solution controls        !
+  1.0e-16                                                  CGM_TOL
+  30                                                       CGM_MIN
+  1000                                                     CGM_MAX
+! --------------------------------------------------------------- !
+!   Input file names                                              !
+  'infiles'                                              infile_dir
+  sparsedata.unf       3D_data_file
+  usedata.unf        preprocessor_file
+  datablock.xml                     datablock_file
+  Met_FCR.dat                    boundary_condition_file
+  FCR_bc_drain1.dat                  boundary_condition_file
+  FCR_bc_outflow.dat                  boundary_condition_file
+  initialTempProfile.dat           initial_profile_file
+  FCR_bc_drain1_tracer.dat				boundary_condition_file
+!save_2018y_190d_23h_59m_20s.unf					restart_in_file
+! --------------------------------------------------------------- !
+!  Output controls                                                !
+  'outfiles'                                       outfile_unf_dir
+  'txtfiles'                                       outfile_txt_dir
+  0                                           start_output_monitor
+  0                                           start_output_save
+  0                                               iter_out_monitor
+  691200                                              iter_out_save
+  691200                                           iter_out_restart
+  save                                           restart_save_file
+  restart_final                                   restart_out_file
+! --------------------------------------------------------------- !
+!  Debugging controls                                             !
+  1                                                         iquiet
+  1                                                    debug_check
+  0                                                    debug_print
+  0                                              debug_print_start
+  0                                                    debug_point
+  0                                            debug_timestep_file
+  100                                         debug_timestep_reset
+  1                                             debug_baroclinic_x
+  1                                             debug_baroclinic_y
+  1                                                     ihardlimit
+! --------------------------------------------------------------- !
+!  End                                                            !

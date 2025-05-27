@@ -1,0 +1,11 @@
+! - -
+! - Boundary condition file for Falling Creek
+! -  BCs
+! - -
+1  flow_yp     Inflow
+	20      22      :
+2  flow_xp     Outflow
+	72      12      :
+
+
+

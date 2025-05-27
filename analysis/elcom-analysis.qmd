@@ -1,0 +1,264 @@
+---
+title: "ELCOM Analysis"
+format: html
+editor: visual
+---
+
+```{r}
+library(animation)
+library(ncdf4)
+library(lubridate)
+library(tidyverse)
+```
+
+Files
+
+```{r}
+profile_nc <- "../outfiles/profile.nc"
+curtain_nc <- "../outfiles/curtain.nc"
+sheet_nc <- "../outfiles/sheet_surface.nc"
+
+```
+
+# Profile
+
+A profile is vertial model output for a single location
+
+```{r}
+output <- nc_open(profile_nc)
+temp <- ncvar_get(output, "TEMPERATURE")
+depth <- ncvar_get(output, "Z")
+
+#Date format
+dates<- ncvar_get(output, "Ordinal_Dates")
+hour <- ncvar_get(output, "Hour")
+minute <- ncvar_get(output, "Minute")
+second <- ncvar_get(output, "Second")
+
+# Extract month from the date object
+doy <- substr(dates, 5, 7)
+year <- substr(dates, 1, 4)
+num_hour <- round(as.numeric(hour), 0)
+num_min <- round(as.numeric(minute), 0)
+num_sec <- round(as.numeric(second), 0)
+full_date<- paste(year, doy)
+date <- as_date(paste(year, doy, sep = "-"), format = "%Y-%j")
+datetime <- as_datetime(date) + hours(num_hour) + minutes(num_min) + seconds(num_sec)
+```
+
+Temporal-spatial plot
+
+```{r}
+par(oma = c(2, 2, 3, 2))   # set margin size (oma) so that the title is included
+col <- topo.colors
+
+filled.contour(x = datetime,
+               y = depth,
+               z = t(as.matrix(temp)),
+               color = col,
+               ylim = c(-11, 0),
+               zlim = range(c(temp), na.rm = TRUE),
+               xlab = "time",
+               ylab = "Height, m",
+               main = "Temperature, °C")
+```
+
+# Curtain
+
+A curtain is 2D model output across a vertical plane
+
+```{r}
+#Model output
+output <- nc_open(curtain_nc)
+temp <- ncvar_get(output, "TEMPERATURE")
+tracer <- ncvar_get(output, "TRACER_1")
+depth <- ncvar_get(output, "Z")
+s <- ncvar_get(output, "S")
+
+#Date format
+dates<- ncvar_get(output, "Ordinal_Dates")
+hour <- ncvar_get(output, "Hour")
+minute <- ncvar_get(output, "Minute")
+second <- ncvar_get(output, "Second")
+
+# Extract month from the date object
+doy <- substr(dates, 5, 7)
+year <- substr(dates, 1, 4)
+num_hour <- round(as.numeric(hour), 0)
+num_min <- round(as.numeric(minute), 0)
+num_sec <- round(as.numeric(second), 0)
+full_date<- paste(year, doy)
+date <- as_date(paste(year, doy, sep = "-"), format = "%Y-%j")
+datetime <- as_datetime(date) + hours(num_hour) + minutes(num_min) + seconds(num_sec)
+```
+
+Pick a time step
+
+```{r}
+tstep <- 2
+```
+
+Temperature
+
+```{r}
+# temporal-spatial plot of the concentrations
+par(oma = c(2, 2, 3, 2))   # set margin size (oma) so that the title is included
+col <- topo.colors
+
+temp_curr <- temp[,,tstep]
+filled.contour(x = s,
+               y = depth,
+               z = (as.matrix(temp_curr)),
+               color = col,
+               zlim = range(c(temp), na.rm = TRUE),
+               main = paste0("Temperature, °C ", datetime[tstep]))
+```
+
+Tracer
+
+```{r}
+tracer_tstep <- tracer[,,tstep]
+filled.contour(x = s,
+               y = depth,
+               z = (as.matrix(tracer_tstep)),
+               color = col,
+               zlim = range(c(tracer_tstep), na.rm = TRUE),
+               main = paste0("TRACER ", datetime[tstep]))
+```
+
+Animation
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+saveGIF({
+   for (i in 1:dim(temp)[3]) {
+    temp_tstep <- temp[,,i]
+    filled.contour(x = s,
+                   y = depth,
+                   z = (as.matrix(temp_tstep)),
+                   color = col,
+                   zlim = range(c(temp), na.rm = TRUE),
+                   main = paste0("Temperature:  ", datetime[i]))
+  }
+}, interval = 1, movie.name = "temperature_curtain.gif", ani.width = 800, ani.height = 300)
+```
+
+![](temperature_curtain.gif)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+saveGIF({
+   for (i in 1:dim(temp)[3]) {
+    tracer_curr <- tracer[,,i]
+    filled.contour(x = s,
+                   y = depth,
+                   z = (as.matrix(tracer_curr)),
+                   color = col,
+                   zlim = range(c(tracer), na.rm = TRUE),
+                   main = paste0("TRACER ", datetime[i]))
+  }
+}, interval = 1, movie.name = "tracer_curtain.gif", ani.width = 800, ani.height = 300)
+```
+
+![](tracer_curtain.gif)
+
+# Sheet
+
+```{r}
+#Model output
+output <- nc_open(sheet_nc)
+temp <- ncvar_get(output, "TEMPERATURE")
+dates<- ncvar_get(output, "Ordinal_Dates")
+x <- ncvar_get(output, "X")
+y <- ncvar_get(output, "Y")
+tracer <- ncvar_get(output, "TRACER_1")
+#Date format
+hour <- ncvar_get(output, "Hour")
+minute <- ncvar_get(output, "Minute")
+second <- ncvar_get(output, "Second")
+
+# Extract month from the date object
+doy <- substr(dates, 5, 7)
+year <- substr(dates, 1, 4)
+num_hour <- round(as.numeric(hour), 0)
+num_min <- round(as.numeric(minute), 0)
+num_sec <- round(as.numeric(second), 0)
+full_date<- paste(year, doy)
+date <- as.Date(paste(year, doy, sep = "-"), format = "%Y-%j")
+datetime <- as_datetime(date) + hours(num_hour) + minutes(num_min) + seconds(num_sec)
+```
+
+Pick a time step
+
+```{r}
+tstep <- 2
+```
+
+Temperature
+
+```{r fig.width=4, fig.height=8, fig.align='center'}
+
+temp_tstep <- apply(as.matrix(temp[,,tstep]),2, rev)
+
+as.data.frame(temp_tstep) |> 
+  mutate(y = 1:n()) |> 
+  pivot_longer(-y, names_to = "x", values_to = "Temperature") |> 
+  mutate(x = as.numeric(substring(x, first = 2))) |> 
+  ggplot() +
+  geom_raster(aes(x = x, y = y, fill = Temperature)) + 
+  scale_fill_viridis_c(na.value="white") +
+  theme_void()
+```
+
+Tracer
+
+```{r fig.width=4, fig.height=8, fig.align='center'}
+tracer_tstep <- apply(as.matrix(tracer[,,tstep]),2, rev)
+
+as.data.frame(tracer_tstep) |> 
+  mutate(y = 1:n()) |> 
+  pivot_longer(-y, names_to = "x", values_to = "Tracer") |> 
+  mutate(x = as.numeric(substring(x, first = 2))) |> 
+  ggplot() +
+  geom_raster(aes(x = x, y = y, fill = Tracer)) + 
+  scale_fill_viridis_c(na.value="white") +
+  theme_void()
+```
+
+Animation
+
+```{r}
+saveGIF({
+   for (i in 1:dim(temp)[3]) {
+    temp_tstep <- apply(as.matrix(temp[,,i]),2, rev)
+    p <- as.data.frame(temp_tstep) |> 
+      mutate(y = 1:n()) |> 
+      pivot_longer(-y, names_to = "x", values_to = "Temperature") |> 
+      mutate(x = as.numeric(substring(x, first = 2))) |> 
+      ggplot() +
+      geom_raster(aes(x = x, y = y, fill = Temperature)) +
+      scale_fill_viridis_c(na.value="white", limits = range(c(temp), na.rm = TRUE)) +
+      theme_void()
+    print(p)
+  }
+}, interval = 1, movie.name = "temperature_surface.gif", ani.width = 400, ani.height = 1200)
+```
+
+![](temperature_surface.gif)
+
+```{r}
+saveGIF({
+   for (i in 1:dim(temp)[3]) {
+    tracer_tstep <- apply(as.matrix(tracer[,,i]),2, rev)
+    p <- as.data.frame(tracer_tstep) |> 
+      mutate(y = 1:n()) |> 
+      pivot_longer(-y, names_to = "x", values_to = "Tracer") |> 
+      mutate(x = as.numeric(substring(x, first = 2))) |> 
+      ggplot() +
+      geom_raster(aes(x = x, y = y, fill = Tracer)) +
+      scale_fill_viridis_c(na.value="white", limits = c(0,5)) +
+      theme_void()
+    print(p)
+  }
+}, interval = 1, movie.name = "tracer_surface.gif", ani.width = 400, ani.height = 1200)
+```
+
+![](tracer_surface.gif)

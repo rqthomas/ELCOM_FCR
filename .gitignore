@@ -1,0 +1,5 @@
+outfiles/*
+elcom_debug.txt
+elcom_echo.txt
+analysis/*.html
+analysis/*.gif

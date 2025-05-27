@@ -1,0 +1,25 @@
+!---------------------------------------------------------------------------- !
+!                                                                             !
+ FILE                                   run_pre.dat
+!                                                                             !
+! --------------------------------------------------------------------------- !
+! input files                                                                 !
+!                                                                             !
+ 'bathymetry/coorong25by73_FCR.dat'         BATHYMETRY_FILE
+ 'bathymetry/FCR_bc.dat'	    BOUNDARY_CONDITION_FILE
+!                                                                             !
+! --------------------------------------------------------------------------- !
+! output files                                                                !
+!                                                                             !
+ 'bathymetry/FCRBathymetryOut.txt'                   DATAOUT_FILE
+ 'infiles/usedata.unf'                  ELCOM_USEDATA_FILE
+ 'infiles/sparsedata.unf'               ELCOM_SPARSEDATA_FILE
+!                                                                             !
+! --------------------------------------------------------------------------- !
+! permission to overwrite existing files                                      !
+!                                                                             !
+ yes                                     overwrite
+!                                                                             !
+! --------------------------------------------------------------------------- !
+
+
