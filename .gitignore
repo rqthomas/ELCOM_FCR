@@ -1,3 +1,4 @@
+.DS_Store
 outfiles/*
 elcom_debug.txt
 elcom_echo.txt
