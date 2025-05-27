@@ -5,7 +5,7 @@
 ! --------------------------------------------------------------------------- !
 ! input files                                                                 !
 !                                                                             !
- 'bathymetry/coorong25by73_FCR.dat'         BATHYMETRY_FILE
+ 'bathymetry/FCR_10m.dat'         BATHYMETRY_FILE
  'bathymetry/FCR_bc.dat'	    BOUNDARY_CONDITION_FILE
 !                                                                             !
 ! --------------------------------------------------------------------------- !

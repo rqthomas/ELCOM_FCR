@@ -1,7 +1,7 @@
     11
  'File surf_map.txt'
  'Contains the i,j -> n relationship between the non-land bathymetry'
- 'cells in the bathymetry file bathymetry/coorong25by73_FCR.dat'
+ 'cells in the bathymetry file bathymetry/FCR_10m.dat'
  'and the sparse data (1D) vector representation of 3D space in ELCOM.'
  'The i values (first column) are the rows and the j values (second '
  'column) are the columns in the bathymetry file.'

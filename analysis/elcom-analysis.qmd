@@ -1,7 +1,9 @@
 ---
 title: "ELCOM Analysis"
-format: html
-editor: visual
+format:
+  html:
+    embed-resources: true
+  gfm: default
 ---
 
 ```{r}
@@ -22,7 +24,7 @@ sheet_nc <- "../outfiles/sheet_surface.nc"
 
 # Profile
 
-A profile is vertial model output for a single location
+A profile is vertical model output for a single location
 
 ```{r}
 output <- nc_open(profile_nc)
@@ -48,7 +50,7 @@ datetime <- as_datetime(date) + hours(num_hour) + minutes(num_min) + seconds(num
 
 Temporal-spatial plot
 
-```{r}
+```{r fig.align='center'}
 par(oma = c(2, 2, 3, 2))   # set margin size (oma) so that the title is included
 col <- topo.colors
 
@@ -100,7 +102,7 @@ tstep <- 2
 
 Temperature
 
-```{r}
+```{r fig.align='center'}
 # temporal-spatial plot of the concentrations
 par(oma = c(2, 2, 3, 2))   # set margin size (oma) so that the title is included
 col <- topo.colors
@@ -116,7 +118,7 @@ filled.contour(x = s,
 
 Tracer
 
-```{r}
+```{r fig.align='center'}
 tracer_tstep <- tracer[,,tstep]
 filled.contour(x = s,
                y = depth,
@@ -137,12 +139,12 @@ saveGIF({
                    z = (as.matrix(temp_tstep)),
                    color = col,
                    zlim = range(c(temp), na.rm = TRUE),
-                   main = paste0("Temperature:  ", datetime[i]))
+                   main = paste0("Temperature:  ", as_date(datetime[i])))
   }
-}, interval = 1, movie.name = "temperature_curtain.gif", ani.width = 800, ani.height = 300)
+}, interval = 0.2, movie.name = "temperature_curtain.gif", ani.width = 800, ani.height = 300)
 ```
 
-![](temperature_curtain.gif)
+![](temperature_curtain.gif){fig-align="center"}
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 saveGIF({
@@ -153,12 +155,12 @@ saveGIF({
                    z = (as.matrix(tracer_curr)),
                    color = col,
                    zlim = range(c(tracer), na.rm = TRUE),
-                   main = paste0("TRACER ", datetime[i]))
+                   main = paste0("TRACER ", as_date(datetime[i])))
   }
-}, interval = 1, movie.name = "tracer_curtain.gif", ani.width = 800, ani.height = 300)
+}, interval = 0.2, movie.name = "tracer_curtain.gif", ani.width = 800, ani.height = 300)
 ```
 
-![](tracer_curtain.gif)
+![](tracer_curtain.gif){fig-align="center"}
 
 # Sheet
 
@@ -236,13 +238,14 @@ saveGIF({
       ggplot() +
       geom_raster(aes(x = x, y = y, fill = Temperature)) +
       scale_fill_viridis_c(na.value="white", limits = range(c(temp), na.rm = TRUE)) +
-      theme_void()
+      theme_void() +
+      labs(title = as_date(datetime[i]))
     print(p)
   }
-}, interval = 1, movie.name = "temperature_surface.gif", ani.width = 400, ani.height = 1200)
+}, interval = 0.2, movie.name = "temperature_surface.gif", ani.width = 150, ani.height = 150 * 2.92)
 ```
 
-![](temperature_surface.gif)
+![](temperature_surface.gif){fig-align="center" width="150" height="438"}
 
 ```{r}
 saveGIF({
@@ -255,10 +258,11 @@ saveGIF({
       ggplot() +
       geom_raster(aes(x = x, y = y, fill = Tracer)) +
       scale_fill_viridis_c(na.value="white", limits = c(0,5)) +
+      labs(title = as_date(datetime[i])) +
       theme_void()
     print(p)
   }
-}, interval = 1, movie.name = "tracer_surface.gif", ani.width = 400, ani.height = 1200)
+}, interval = 0.2, movie.name = "tracer_surface.gif", ani.width = 150, ani.height = 150 * 2.92)
 ```
 
-![](tracer_surface.gif)
+![](tracer_surface.gif){fig-align="center" width="150"}

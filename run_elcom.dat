@@ -11,13 +11,13 @@
 ! Time controls                                                   !
   2018188.0											 start_date_cwr
   20.0                                                       del_t
-  691200                                                   iter_max
+  30240                                                   iter_max
 ! --------------------------------------------------------------- !
 !  Simulation module controls                                     !
   1                                                    iheat_input
   0                                                  iatmstability
   0                                                           iice
-  0                                                          irain
+  1                                                          irain
   1                                                          iflow
   0                                                     iunderflow
   0                                                       ibubbler
@@ -134,13 +134,13 @@
   0                                           start_output_monitor
   0                                           start_output_save
   0                                               iter_out_monitor
-  691200                                              iter_out_save
-  691200                                           iter_out_restart
+  30240                                              iter_out_save
+  30240                                           iter_out_restart
   save                                           restart_save_file
   restart_final                                   restart_out_file
 ! --------------------------------------------------------------- !
 !  Debugging controls                                             !
-  1                                                         iquiet
+  0                                                         iquiet
   1                                                    debug_check
   0                                                    debug_print
   0                                              debug_print_start
