@@ -4,17 +4,10 @@
     <interval>4320</interval>
   </GlobalTime>
   <globalVariable>TEMPERATURE</globalVariable>
-  <globalVariable>SALINITY</globalVariable>
   <globalVariable>DENSITY</globalVariable>
   <globalVariable>U_VELOCITY</globalVariable>
   <globalVariable>V_VELOCITY</globalVariable>
-  <globalVariable>RETENTION_T</globalVariable>
   <globalVariable>SED_RAD_LOSS</globalVariable>
-  <globalVariable>EXTC</globalVariable>
-  <globalVariable>PAR_EXTINCTION</globalVariable>
-  <globalVariable>UVA_EXTINCTION</globalVariable>
-  <globalVariable>UVB_EXTINCTION</globalVariable>
-  <globalVariable>NIR_EXTINCTION</globalVariable>
   <globalVariable>AIR_TEMP</globalVariable>
   <globalVariable>CLOUDS</globalVariable>
   <globalVariable>RAIN</globalVariable>
@@ -29,8 +22,6 @@
   <globalVariable>PAR</globalVariable>
   <globalVariable>DISSIPATION</globalVariable>
   <globalVariable>EVAP_VOL_FLUX</globalVariable>
-  <globalVariable>VEGETATION_H</globalVariable>
-  <globalVariable>VEGETATION_CD</globalVariable>
   <globalVariable>MIX_FRACTION</globalVariable>
   <globalVariable>TRACER_1</globalVariable>
  <Profile>
