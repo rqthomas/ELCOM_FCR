@@ -1,5 +1,10 @@
 .DS_Store
 outfiles/*
+outfiles*
+infiles/initialTempProfile_*
+infiles/FCR_Met_*
+infiles/initialTempProfile1*
+infiles/initialTempProfile2*
 elcom_debug.txt
 elcom_echo.txt
 analysis/*.html
